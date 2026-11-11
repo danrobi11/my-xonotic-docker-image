@@ -3,6 +3,8 @@ FROM fedora:42
 RUN dnf install -y --setopt=install_weak_deps=False \
     SDL2 \
     mesa-dri-drivers \
+    mesa-libGL \
+    libglvnd-glx \
     libX11 \
     libXext \
     libXcursor \
