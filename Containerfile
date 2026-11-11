@@ -1,10 +1,14 @@
 FROM fedora:42
 
-RUN dnf install -y --setopt=install_weak_deps=False SDL2 mesa-dri-drivers && \
+RUN dnf install -y --setopt=install_weak_deps=False SDL2 mesa-dri-drivers wget unzip && \
     dnf clean all
 
-# Place your Xonotic/ folder next to the Containerfile when building
-COPY Xonotic /opt/xonotic
+# Download and extract Xonotic
+RUN wget -O /tmp/xonotic.zip https://dl.xonotic.org/xonotic-0.8.6.zip && \
+    unzip /tmp/xonotic.zip -d /opt && \
+    mv /opt/Xonotic /opt/xonotic && \
+    rm /tmp/xonotic.zip && \
+    chmod +x /opt/xonotic/xonotic-linux64-sdl
 
 WORKDIR /opt/xonotic
 ENTRYPOINT ["./xonotic-linux64-sdl"]
